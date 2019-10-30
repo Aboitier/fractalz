@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 18:51:54 by aboitier          #+#    #+#             */
-/*   Updated: 2019/10/30 13:59:25 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/10/30 22:14:43 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# define WIDTH 		1200
-# define HEIGHT 	900
-# define MAX_ITER 	50
+# define WIDTH 			1200
+# define HEIGHT 		900
+# define MAX_ITER 		500
+# define ZOOM_FACTOR	1.5
 
 /*
 ** Mandelbrot fractal boundaries
@@ -34,6 +35,7 @@
 
 # define SCROLL_DOWN 	button == 4
 # define SCROLL_UP 		button == 5
+
 
 typedef int		t_color;
 
@@ -51,6 +53,8 @@ typedef struct	s_info
 	int			image_y;
 	t_bound		boundaries;
 	double		zoom;
+	int			xoffset;
+	int			yoffset;
 	void		*img_ptr;
 	char		*pixels;
 	int			size_line;

@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 18:47:16 by aboitier          #+#    #+#             */
-/*   Updated: 2019/10/29 16:46:23 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/10/30 17:27:14 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main(int ac, char **av)
 	init(&info);
 	printf("zoom = %f\n", info.zoom);
 	draw_mandelbrot(&info);
+	printf("hello\n");
 	head_set_hooks(&info);
 	mlx_loop(info.mlx_ptr);
 	return (0);

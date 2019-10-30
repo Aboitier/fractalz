@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 18:32:29 by aboitier          #+#    #+#             */
-/*   Updated: 2019/10/30 14:21:53 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/10/30 21:46:02 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,40 +46,50 @@ int		zoom(int button, int x, int y, t_info *info)
 {
 	t_bound *ptr;
 	double interpolation;
+	double mouseRe;
+	double mouseIm;
 
 	ptr = &(info->boundaries);
 	interpolation = 0.0;
-	double zoom_factor = 1.2;
 
-	double mouseRe;
 	mouseRe	= (double)x / (WIDTH / (info->AREA_X2 - info->AREA_X1)) + info->AREA_X1;
-	double mouseIm;
-   	mouseIm	= (double)y / (HEIGHT / (info->AREA_Y2 - info->AREA_Y1)) + info->AREA_Y1;
+	printf("mouseRe = %f\n", mouseRe);
+ 	mouseIm	= (double)y / (HEIGHT / (info->AREA_Y2 - info->AREA_Y1)) + info->AREA_Y1;
+  printf("mouse Im = %f\n", mouseIm);
 
+//	double offset;
+//	offset = (info->xoffset + info->yoffset) / (WIDTH + HEIGHT);
 
+  	double tmp_zoom = info->zoom;
 	if (SCROLL_DOWN)
 	{
-		interpolation = 1.0 / (1.0 / zoom_factor);
-		info->zoom /= 1.2;
+		interpolation = 1.0 / (1.0 / ZOOM_FACTOR);
+		info->zoom /= ZOOM_FACTOR;
 	}
 	else if (SCROLL_UP)
 	{
-		interpolation = 1.0 / zoom_factor;
-		info->zoom *= 1.2;
+		interpolation = 1.0 / ZOOM_FACTOR;
+		info->zoom *= ZOOM_FACTOR;
 	}
-		ptr->x1 = interpolate(mouseRe, ptr->x1, interpolation);
-		ptr->x2 = interpolate(mouseRe, ptr->x2, interpolation);
-		ptr->y1 = interpolate(mouseIm, ptr->y1, interpolation);
-		ptr->y2 = interpolate(mouseIm, ptr->y2, interpolation);
+		ptr->x1 += /*interpolate(mouseRe, ptr->x1, interpolation) + */(x / tmp_zoom) - (x / info->zoom);
+		ptr->x2 += /*interpolate(mouseRe, ptr->x1, interpolation) + */(x / tmp_zoom) - (x / info->zoom);
+		//ptr->x2 = interpolate(mouseRe, ptr->x2, interpolation); 
+		ptr->y1 += /*interpolate(mouseIm, ptr->y1, interpolation) + */(y / tmp_zoom) - (y / info->zoom);
+		ptr->y2 += /*interpolate(mouseIm, ptr->y1, interpolation) + */(y / tmp_zoom) - (y / info->zoom);
+		//ptr->y2 = interpolate(mouseIm, ptr->y2, interpolation);
 
+	info->xoffset = x;
+	info->yoffset = y;
 	return (0);
 }
 
 int		mouse_hook(int button, int x, int y, t_info *info)
 {
 	if (button == 4 || button == 5)
-		zoom(button, x, y, info);
-	redraw(info);
+	{
+			zoom(button, x, y, info);
+			redraw(info);
+	}
 	x = y;
 	printf("info->zoom = %f\n", info->zoom); 
 	return (0);

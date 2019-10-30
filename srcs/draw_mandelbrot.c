@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 18:51:07 by aboitier          #+#    #+#             */
-/*   Updated: 2019/10/30 13:58:37 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/10/30 17:30:01 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int		draw_mandelbrot(t_info *info)
 			}
 			x++;
 	}
-	mlx_put_image_to_window(info->mlx_ptr, info->window_ptr, info->img_ptr, info->image_x, info->image_y);
+	printf("hello\n");
+	mlx_put_image_to_window(info->mlx_ptr, info->window_ptr, info->img_ptr, 0, 0);
 	return (0);
 }
