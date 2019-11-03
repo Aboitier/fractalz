@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 18:47:16 by aboitier          #+#    #+#             */
-/*   Updated: 2019/10/30 17:27:14 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/11/03 21:42:05 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	init(t_info *info)
 	info->boundaries = boundaries;
 	
 	get_mlx_params(info);
-	get_image_boundaries(info, info->zoom);
-	create_image(info, info->image_x, info->image_y);
+	create_image(info);
 }
 
 int	main(int ac, char **av)

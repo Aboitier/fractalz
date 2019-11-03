@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 18:51:54 by aboitier          #+#    #+#             */
-/*   Updated: 2019/10/30 22:14:43 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/11/03 21:41:42 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
 # include "../libft/libft.h"
 # include <stdlib.h>
 # include <stdio.h>
+# include <pthread.h>
 
 # define WIDTH 			1200
 # define HEIGHT 		900
-# define MAX_ITER 		500
+# define MAX_ITER 		800
 # define ZOOM_FACTOR	1.5
 
 /*
@@ -53,8 +54,6 @@ typedef struct	s_info
 	int			image_y;
 	t_bound		boundaries;
 	double		zoom;
-	int			xoffset;
-	int			yoffset;
 	void		*img_ptr;
 	char		*pixels;
 	int			size_line;
@@ -67,9 +66,10 @@ void			head_set_hooks(t_info *info);
 int				exit_hook(t_info *info);
 int				key_press_hook(int keycode, t_info *info);
 void			get_image_boundaries(t_info *info, double zoom);
-int				create_image(t_info *info, int image_x, int image_y);
+int				create_image(t_info *info);
 void			my_pixel_put_to_image(int img_color, t_info *info, int x, int y);
 
 int				draw_mandelbrot(t_info *info);
+int				redraw(t_info *info);
 
 #endif
