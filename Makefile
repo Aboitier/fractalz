@@ -6,20 +6,25 @@
 #    By: aboitier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/25 18:46:30 by aboitier          #+#    #+#              #
-#    Updated: 2019/10/30 13:57:00 by aboitier         ###   ########.fr        #
+#    Updated: 2020/03/03 22:09:45 by aboitier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fractol
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=address
 
 FILES	=	main.c				\
+			init.c				\
 			hooks.c				\
 			image.c				\
 			utils.c				\
-			draw_mandelbrot.c	\
+			threads.c			\
+			draw_fracts.c		\
+			zoom.c				\
+			max_iter.c			\
+			#draw_mandelbrot.c	\
 
 SRCS = $(addprefix srcs/, $(FILES))
 OBJS = $(addprefix build/, $(FILES:.c=.o))

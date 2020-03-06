@@ -6,48 +6,38 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 18:47:16 by aboitier          #+#    #+#             */
-/*   Updated: 2019/11/03 21:42:05 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:42:07 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-void	get_mlx_params(t_info *info)
+
+int		select_fract(char *fract, t_info *info)
 {
-	if (!(info->mlx_ptr = mlx_init()))
-	{
-		perror("Error: mlx initialization. Check your environment settings");
-		exit (0);
-	}
-	info->window_ptr = mlx_new_window(info->mlx_ptr, WIDTH, HEIGHT, "FRACTALZ");
-	info->zoom = 100;
+		printf("%s\n", fract);
+	if (ft_strcmp(fract, "mandelbrot") == 0)
+		info->fract = MANDELBROT;
+	else if (ft_strcmp(fract, "julia") == 0)
+		info->fract = JULIA;
+   	else
+		return (FALSE);
+	return (TRUE);	
 }
 
-void	init(t_info *info)
-{
-	t_bound boundaries = { .x1 = -2.1, .x2 =  0.6, .y1 = -1.2, .y2 = 1.2 };
-
-	info->boundaries = boundaries;
-	
-	get_mlx_params(info);
-	create_image(info);
-}
-
-int	main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	t_info	info;
 
-	ft_putstr(av[0]);
-	if (ac > 2 /* or invalid fractal name */)
+	ft_bzero(&info, sizeof(info));
+	if (ac != 2 || select_fract(av[1], &info) == FALSE)
 	{
+		ft_putstr(USAGE);
 		return (0);
 	}
-
-	ft_bzero(&info, sizeof(info));
 	init(&info);
-	printf("zoom = %f\n", info.zoom);
-	draw_mandelbrot(&info);
-	printf("hello\n");
+	pthread_init(&info);
+	//draw_mandelbrot(&info);
 	head_set_hooks(&info);
 	mlx_loop(info.mlx_ptr);
 	return (0);

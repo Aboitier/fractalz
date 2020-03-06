@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image.c                                            :+:      :+:    :+:   */
+/*   max_iter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 17:21:46 by aboitier          #+#    #+#             */
-/*   Updated: 2020/03/03 21:58:00 by aboitier         ###   ########.fr       */
+/*   Created: 2020/03/01 19:44:32 by aboitier          #+#    #+#             */
+/*   Updated: 2020/03/03 22:05:42 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int		create_image(t_info *info)
+void	modify_max_iter(int keycode, t_info *info)
 {
-	int		bits_per_pixel;
-	int		size_line;
-	int		endian;
+	if (keycode == PLUS)
+		info->max_iter += 25;
+	else
+		info->max_iter -= 25;
+}
 
-	if (!(info->img_ptr = mlx_new_image(info->mlx_ptr, WIDTH, HEIGHT)))
-		return (-1);
-	info->pixels = mlx_get_data_addr(info->img_ptr,
-			&bits_per_pixel, &size_line, &endian);
-	ft_bzero(info->pixels, ft_strlen(info->pixels));
-	info->size_line = size_line;
-	info->bpp = bits_per_pixel;
-	return (0);
+void	put_nb_iter_to_image(t_info *info)
+{
+	char 	*nb_iter;
+	char	*char_to_put;
+
+	nb_iter = ft_itoa(info->max_iter);
+	char_to_put = ft_strjoin("Number of iterations ", nb_iter);
+	mlx_string_put(info->mlx_ptr, info->window_ptr, 15, 15, 0x00000, char_to_put);
+	free(nb_iter);
+	free(char_to_put);
 }
